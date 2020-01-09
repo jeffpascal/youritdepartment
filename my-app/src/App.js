@@ -8,9 +8,11 @@ import {
   useParams
 } from "react-router-dom";
 import Home from "./Home"
+import CTX from './store'
 
 export default function App() {
   return (
+    <CTX.Provider value={{"clicked":5}}>
     <Router>
       <div>
         <ul>
@@ -38,6 +40,7 @@ export default function App() {
         </Switch>
       </div>
     </Router>
+    </CTX.Provider>
   );
 }
 
