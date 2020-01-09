@@ -20,7 +20,7 @@ const Home = (props) => {
   }
 
   useEffect(() => {
-    clickNumber= store.clicked;
+    clickNumber= store.clicked | 0;
     console.log('page loaded');
   } , [])
 
