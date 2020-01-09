@@ -1,14 +1,22 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import logo from './logo.png';
 
-function Home() {
+const Home = (props) => {
+
+  const [message, setMessage] = useState("hello World");
+ 
+  const changeState = () => {
+    setMessage("Changed");
+  }
+
   return (
-        
     <div className="Home">
-        asdasd
+        <p>{props.text}</p>
+        <p>{message}</p>
         <Suspense fallback={<div>Loading</div>}></Suspense>
-    </div>
-  );
+        <button onClick={changeState}>changeState</button>
+    </div>  
+  )
 }
 
 export default Home;

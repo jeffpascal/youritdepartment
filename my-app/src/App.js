@@ -7,6 +7,7 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
+import Home from "./Home"
 
 export default function App() {
   return (
@@ -32,16 +33,12 @@ export default function App() {
             <Topics />
           </Route>
           <Route path="/">
-            <Home />
+            <Home text="hello world"/>
           </Route>
         </Switch>
       </div>
     </Router>
   );
-}
-
-function Home() {
-  return <h2>Home</h2>;
 }
 
 function About() {
