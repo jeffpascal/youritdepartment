@@ -1,6 +1,8 @@
 
 # Modules
 
+- module methods always come in 2 varieties. Synchronous and asynchronous. Always use where possible assynchronous calls.
+
 ```console.log(module);```
 ```js
 id: '.',
@@ -85,3 +87,7 @@ logger('message');
 ```const path = require('path');```
 
 - no need to specify './' because it is an object inside node (already a module)
+
+## Print without concatenation:
+
+```console.log(`Total Memory: ${os.freemem()}`)```
