@@ -12,9 +12,7 @@ import CTX from './store'
 
 export default function App() {
   return (
-    <CTX.Provider value={{
-      
-    }}>
+    <CTX.Provider value={{}}>
     <Router>
       <div>
         <ul>
