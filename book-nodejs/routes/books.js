@@ -1,7 +1,8 @@
 const { BookModel } = require("../models/book");
 const express = require("express");
-const router = express();
 
+
+const router = express();
 router.get("/", async (req, res) => {
   const books = await BookModel.find().sort("name");
   res.json(books);

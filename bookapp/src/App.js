@@ -1,28 +1,26 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
-class App extends Component {
-  state = {
-    data: ""
-  };
+const App = props => {
+  
+  const [book, setBook] = useState("nobook");
 
-  componentDidMount() {
+  useEffect(() => {
     fetch("http://localhost:4000/")
       .then(response => {
         return response.json();
       })
       .then(myJson => {
-        // console.log(myJson)
-        this.setState({
-          data: myJson
-        });
+        console.log(myJson)
+       
+      })
+      .catch(err => {
+        setBook("error book")
+        console.log(err);
       });
-  }
+  }, []);
 
-  render() {
-    const { data } = this.state;
-    return <div>{data}</div>;
-  }
-}
+  return <div>{book}</div>;
+};
 
 export default App;

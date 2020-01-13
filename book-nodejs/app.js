@@ -10,7 +10,7 @@ const port = 4000;
 const mongoose = require("mongoose");
 mongoose
   .connect(
-    "mongodb+srv://root:root@db-cluster-jivnd.gcp.mongodb.net/book-app?retryWrites=true&w=majority",
+    "mongodb+srv://root:root@db-cluster-jivnd.gcp.mongodb.net/test?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Running mongodb"))
