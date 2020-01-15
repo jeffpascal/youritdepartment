@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Home from "./Home"
 import CTX from './store'
+import LotsOfUsers from "./LotsOfUsers";
 
 export default function App() {
   return (
@@ -35,7 +36,7 @@ export default function App() {
             <Topics />
           </Route>
           <Route path="/">
-            <Home text="hello world"/>
+            <Home users={LotsOfUsers} text="hello world"/>
           </Route>
         </Switch>
       </div>
