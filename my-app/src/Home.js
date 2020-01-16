@@ -2,28 +2,40 @@ import React, { Suspense, useState, useEffect } from "react";
 
 const Home = props => {
   const [users, setUsers] = useState(props.users);
+  const [displayed, setDisplayed] = useState(props.users)
 
   console.log(users);
 
-  useEffect(() => {}, []);
+  useEffect(() => {},[]);
+  
 
   const addItem = e => {
-    users.push(e);
-    console.log(e);
+    
+    setUsers(users.concat(({name : e.target.parentElement.addUser.value})));
     e.preventDefault();
   };
 
   const removeItem = item => {
-    users.forEach(user => {
-      if (user.id === item) {
-        user.name = null;
-      }
-    });
-    users.push({name:"da", id:101})
-    console.log(users);
-    setUsers(users);
+    const newUsersDisplayed = displayed.filter(user => user.id !== item);
+    const newUsers = users.filter(user => user.id !== item); // users remains untouched
+    setDisplayed(newUsersDisplayed);
+    setUsers(newUsers);
     
   };
+
+  const searchUsers = e => {
+    const newUsers = users.filter(user => user.name.includes(e.target.value));
+    console.log(newUsers);
+    if(e.target.value !== undefined){
+      setDisplayed(newUsers);
+    }
+    else{
+      setDisplayed(users);
+    }
+
+
+
+  }
 
   return (
     <div className="Home">
@@ -39,8 +51,20 @@ const Home = props => {
         </button>
       </form>
 
+      <form className="form" id="searchForm">
+        <input
+        type="text"
+        className="input"
+        id="searchUser"
+        placeholder="search User"
+        onChange={(e)=>{
+          searchUsers(e);
+        }}>
+        </input>
+      </form>
+
       <ul>
-        {users.map(item => {
+        {displayed.map(item => {
           return (
             <>
               <li key={item.id}>{item.name + " " + item.count}</li>
