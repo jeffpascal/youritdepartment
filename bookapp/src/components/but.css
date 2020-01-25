@@ -1,0 +1,19 @@
+.StyledThumb {
+  background: purple;
+  width: 10px;
+  height: 25px;
+  border-radius: 3px;
+  position: relative;
+  top: -5px;
+  opacity: 0.5;
+  background: #823eb7;
+  cursor: pointer;
+}
+
+.StyledSlider {
+  background: yellow;
+  position: relative;
+  border-radius: 3px;
+  background: #dddddd;
+  height: 15px;
+}
