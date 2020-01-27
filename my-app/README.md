@@ -20,3 +20,4 @@ You will also see any lint errors in the console.
 - Add User (not fully implemented)
 - Increase count on User (will not work well, still work to do)
 - Delete User
+- Timer before loading results? (why?) There is almost no good reason to use timers in JavaScript since it is single threaded and can only cause issues. DOM updating at each change is much better and even more efficient because of how React renders the DOM. (React only updates the changed tags in the DOM)
