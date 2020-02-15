@@ -1,45 +1,65 @@
-import React, { Suspense, useState, useEffect } from "react";
+import React, { Suspense, useState, useEffect, useRef } from "react";
 
 const Home = props => {
   const [users, setUsers] = useState(props.users);
   const [displayed, setDisplayed] = useState(props.users);
 
-  console.log(users);
+  let displayString;
+  const countRef = useRef(displayString);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log("This will run after 1 second!");
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const modifyUserStateAndDisplay = wantedState => {
+    console.log("modifyUserStateAndDisplay Called");
+    setUsers(wantedState);
+    setDisplayed(wantedState);
+  };
 
   const addItem = e => {
+    console.log("addItem Called");
     let newUsers = users.concat({ name: e.target.parentElement.addUser.value });
-    setUsers(newUsers);
-    setDisplayed(newUsers);
+    modifyUserStateAndDisplay(newUsers);
 
     e.preventDefault();
   };
 
   const removeItem = item => {
-    const newUsersDisplayed = displayed.filter(user => user.id !== item);
-    const newUsers = users.filter(user => user.id !== item); // users remains untouched
-    setDisplayed(newUsersDisplayed);
-    setUsers(newUsers);
+    console.log("removeItem Called");
+    const afterDeletedUser = displayed.filter(user => {
+      return !(user === item);
+    });
+    modifyUserStateAndDisplay(afterDeletedUser);
   };
-  
+
   const addToCounter = item => {
-    console.log(item);
+    console.log("addToCounter Called");
     item.count++;
 
-
     const newUsers = users.filter(user => user.id !== item); // users remains untouched
     setUsers(newUsers);
   };
 
+  //requires a re-render for each time you type TOFIX
   const searchUsers = e => {
-    const newUsers = users.filter(user => user.name.includes(e.target.value));
-    console.log(newUsers);
-    if (e.target.value !== undefined) {
-      setDisplayed(newUsers);
-    } else {
-      setDisplayed(users);
-    }
+    displayString = e.target.value;
+    const timer = setTimeout(() => {
+      console.log(countRef);
+      if (displayString) {
+        let newUsers = users.filter(user => user.name.includes(displayString));
+        setDisplayed(newUsers);
+      } else {
+        setDisplayed(users);
+      }
+      clearTimeout();
+    }, 1000);
+
+    console.log("searchUsers Called");
+    //if what i'm seaching is nothing (empty search bar), we show the users
   };
 
   return (
@@ -72,14 +92,12 @@ const Home = props => {
         {displayed.map(item => {
           return (
             <li key={item.id}>
-              {item.name + " " + item.count}{" "}
-              <button className="button" onClick={() => removeItem(item.id)}>
-                {" "}
-                X{" "}
+              {item.name + " " + item.count}
+              <button className="button" onClick={() => removeItem(item)}>
+                X
               </button>
               <button className="button" onClick={() => addToCounter(item)}>
-                {" "}
-                +1{" "}
+                +1
               </button>
             </li>
           );
