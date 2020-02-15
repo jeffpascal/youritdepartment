@@ -1,6 +1,6 @@
 import React from "react";
 
-const LotsOfUsers = [...Array(1001).keys()].map(
+const LotsOfUsers = [...Array(100).keys()].map(
   (item, key) =>
     (item = {
       name: `User ${key}`,

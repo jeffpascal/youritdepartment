@@ -1,53 +1,54 @@
 import React, { Suspense, useState, useEffect, useRef } from "react";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Home = props => {
+  const styleHigh = {
+    margin: "10px"
+  };
+  const styleInline = {
+    margin: "10px",
+    display: "inline-block"
+  };
+
   const [users, setUsers] = useState(props.users);
   const [displayed, setDisplayed] = useState(props.users);
+  const [style, setStyle] = useState(styleInline);
 
   let displayString;
   const countRef = useRef(displayString);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      console.log("This will run after 1 second!");
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const modifyUserStateAndDisplay = wantedState => {
-    console.log("modifyUserStateAndDisplay Called");
-    setUsers(wantedState);
-    setDisplayed(wantedState);
-  };
-
-  const addItem = e => {
-    console.log("addItem Called");
-    let newUsers = users.concat({ name: e.target.parentElement.addUser.value });
-    modifyUserStateAndDisplay(newUsers);
-
-    e.preventDefault();
-  };
-
   const removeItem = item => {
     console.log("removeItem Called");
-    const afterDeletedUser = displayed.filter(user => {
+    const afterDeletedUserDisplayed = displayed.filter(user => {
       return !(user === item);
     });
-    modifyUserStateAndDisplay(afterDeletedUser);
+
+    const afterDeletedUser = users.filter(user => {
+      return !(user === item);
+    });
+    setUsers(afterDeletedUser);
+    setDisplayed(afterDeletedUserDisplayed);
   };
 
   const addToCounter = item => {
     console.log("addToCounter Called");
-    item.count++;
 
-    const newUsers = users.filter(user => user.id !== item); // users remains untouched
+    const newUsers = users.map(user => {
+      if (user === item) {
+        return user;
+      } else {
+        user.count++;
+        return user;
+      }
+    });
     setUsers(newUsers);
   };
 
   //requires a re-render for each time you type TOFIX
   const searchUsers = e => {
     displayString = e.target.value;
-    const timer = setTimeout(() => {
+    setTimeout(() => {
       console.log(countRef);
       if (displayString) {
         let newUsers = users.filter(user => user.name.includes(displayString));
@@ -55,49 +56,71 @@ const Home = props => {
       } else {
         setDisplayed(users);
       }
-      clearTimeout();
-    }, 1000);
+    }, 400);
 
     console.log("searchUsers Called");
     //if what i'm seaching is nothing (empty search bar), we show the users
   };
 
   return (
-    <div className="Home">
-      <form className="form" id="addUserForm">
-        <input
-          type="text"
-          className="input"
-          id="addUser"
-          placeholder="Add user"
-        />
-        <button className="button" onClick={addItem}>
-          Add Item
-        </button>
-      </form>
+    <div className="home">
+      <button
+        style={{ width: "50", fontSize: "2rem", margin: "20px" }}
+        type="button"
+        class="btn btn-danger"
+        onClick={() => setStyle(styleHigh)}
+      >
+        ToggleHigh
+      </button>
 
-      <form className="form" id="searchForm">
+      <button
+        style={{ width: "50", fontSize: "2rem", margin: "20px" }}
+        type="button"
+        class="btn btn-danger"
+        onClick={() => setStyle(styleInline)}
+      >
+        ToggleInline
+      </button>
+
+      <form className="form-inline" id="searchForm">
         <input
           type="text"
-          className="input"
+          className="form-control form-control-sm ml-3 w-75"
           id="searchUser"
-          placeholder="search User"
+          placeholder="Search"
           onChange={e => {
             searchUsers(e);
           }}
         ></input>
       </form>
 
-      <ul>
+      <ul className="users">
         {displayed.map(item => {
           return (
-            <li key={item.id}>
-              {item.name + " " + item.count}
-              <button className="button" onClick={() => removeItem(item)}>
-                X
+            <li key={item.id} style={style}>
+              <button
+                style={{ width: "150px", fontSize: "2rem" }}
+                type="button"
+                class="btn btn-primary"
+                onClick={() => addToCounter(item)}
+              >
+                {item.name}
+                <span
+                  style={{ float: "right" }}
+                  className="w-100 badge badge-light"
+                  text-size="10px"
+                >
+                  {item.count}
+                </span>
               </button>
-              <button className="button" onClick={() => addToCounter(item)}>
-                +1
+
+              <button
+                style={{ fontSize: "2rem" }}
+                type="button"
+                class="btn btn-secondary"
+                onClick={() => removeItem(item)}
+              >
+                X
               </button>
             </li>
           );
