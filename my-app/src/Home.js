@@ -2,15 +2,15 @@ import React, { Suspense, useState, useEffect, useRef } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Home = props => {
-  const styleHigh = {
-    margin: "10px"
-  };
-  const styleInline = {
-    margin: "10px",
-    display: "inline-block"
-  };
+const styleHigh = {
+  margin: "10px"
+};
+const styleInline = {
+  margin: "10px",
+  display: "inline-block"
+};
 
+const Home = props => {
   const [users, setUsers] = useState(props.users);
   const [displayed, setDisplayed] = useState(props.users);
   const [style, setStyle] = useState(styleInline);
@@ -27,13 +27,13 @@ const Home = props => {
     const afterDeletedUser = users.filter(user => {
       return !(user === item);
     });
+
     setUsers(afterDeletedUser);
     setDisplayed(afterDeletedUserDisplayed);
   };
 
   const addToCounter = item => {
     console.log("addToCounter Called");
-
     const newUsers = users.map(user => {
       if (user === item) {
         return user;
@@ -67,7 +67,7 @@ const Home = props => {
       <button
         style={{ width: "50", fontSize: "2rem", margin: "20px" }}
         type="button"
-        class="btn btn-danger"
+        className="btn btn-danger"
         onClick={() => setStyle(styleHigh)}
       >
         ToggleHigh
@@ -76,7 +76,7 @@ const Home = props => {
       <button
         style={{ width: "50", fontSize: "2rem", margin: "20px" }}
         type="button"
-        class="btn btn-danger"
+        className="btn btn-danger"
         onClick={() => setStyle(styleInline)}
       >
         ToggleInline
@@ -101,7 +101,7 @@ const Home = props => {
               <button
                 style={{ width: "150px", fontSize: "2rem" }}
                 type="button"
-                class="btn btn-primary"
+                className="btn btn-primary"
                 onClick={() => addToCounter(item)}
               >
                 {item.name}
@@ -117,7 +117,7 @@ const Home = props => {
               <button
                 style={{ fontSize: "2rem" }}
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 onClick={() => removeItem(item)}
               >
                 X
