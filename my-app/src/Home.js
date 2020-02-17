@@ -16,10 +16,8 @@ const Home = props => {
   const [style, setStyle] = useState(styleInline);
 
   let displayString;
-  const countRef = useRef(displayString);
 
   const removeItem = item => {
-    console.log("removeItem Called");
     const afterDeletedUserDisplayed = displayed.filter(user => {
       return !(user === item);
     });
@@ -33,7 +31,6 @@ const Home = props => {
   };
 
   const addToCounter = item => {
-    console.log("addToCounter Called");
     const newUsers = users.map(user => {
       if (user === item) {
         return user;
@@ -49,7 +46,6 @@ const Home = props => {
   const searchUsers = e => {
     displayString = e.target.value;
     setTimeout(() => {
-      console.log(countRef);
       if (displayString) {
         let newUsers = users.filter(user => user.name.includes(displayString));
         setDisplayed(newUsers);
@@ -57,21 +53,21 @@ const Home = props => {
         setDisplayed(users);
       }
     }, 400);
-
-    console.log("searchUsers Called");
-    //if what i'm seaching is nothing (empty search bar), we show the users
   };
 
-  return (
-    <div className="home">
+  const CustomButton = () => {
+    return (
       <button
         style={{ width: "50", fontSize: "2rem", margin: "20px" }}
         type="button"
         className="btn btn-danger"
-        onClick={() => setStyle(styleHigh)}
-      >
-        ToggleHigh
-      </button>
+      ></button>
+    );
+  };
+
+  return (
+    <div className="home">
+      <CustomButton></CustomButton>
 
       <button
         style={{ width: "50", fontSize: "2rem", margin: "20px" }}
@@ -100,7 +96,6 @@ const Home = props => {
             <li key={item.id} style={style}>
               <button
                 style={{ width: "150px", fontSize: "2rem" }}
-                type="button"
                 className="btn btn-primary"
                 onClick={() => addToCounter(item)}
               >
@@ -108,7 +103,6 @@ const Home = props => {
                 <span
                   style={{ float: "right" }}
                   className="w-100 badge badge-light"
-                  text-size="10px"
                 >
                   {item.count}
                 </span>
@@ -116,7 +110,6 @@ const Home = props => {
 
               <button
                 style={{ fontSize: "2rem" }}
-                type="button"
                 className="btn btn-secondary"
                 onClick={() => removeItem(item)}
               >
